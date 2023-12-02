@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="t"> {{util.getString('Profile')}} </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="edit_flag = !edit_flag" *ngIf="edit_flag">
+        <ion-icon slot="icon-only" name="pencil"></ion-icon>
+      </ion-button>
+      <ion-button (click)="update()" *ngIf="!edit_flag">
+        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main_content_div">
+
+    <div class="main_div">
+
+      <div class="info_div">
+              
+<div class="image-upload" style="text-align: center;">
+  <label for="file-input">
+    <img [src]="image_link_show"   style="border-radius: 100%;" class="img-circle" width="150"
+      height="150"  />
+  </label>
+
+  <input id="file-input" style="display: none;" (change)="preview_banner($event.target.files)" type="file" />
+</div>
+
+        <div class="name">
+          <div class="image_div">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
+          <div class="content_div">
+            <span>{{util.getString('Full name')}} &nbsp;- </span>
+            <ion-input type="text" [disabled]="edit_flag" [placeholder]="util.getString('First name')"
+              [(ngModel)]="fname">
+            </ion-input>
+          </div>
+        </div>
+
+        
+
+        <div class="name">
+          <div class="image_div">
+            <ion-icon name="mail-outline"></ion-icon>
+          </div>
+          <div class="content_div">
+            <span>{{util.getString('Email')}} &nbsp;- </span>
+            <ion-input type="text" [disabled]="true" [placeholder]="util.getString('Email')" [(ngModel)]="email">
+            </ion-input>
+          </div>
+        </div>
+
+        <div class="name">
+          <div class="image_div">
+            <ion-icon name="call-outline"></ion-icon>
+          </div>
+          <div class="content_div">
+            <span>{{util.getString('Mobile')}} &nbsp;- </span>
+            <ion-input type="text" [disabled]="true" [placeholder]="util.getString('Mobile')" [(ngModel)]="mobile">
+            </ion-input>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

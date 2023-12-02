@@ -1,0 +1,38 @@
+  <div class="row mt15" style="    padding: 36px;">
+   
+    <div class="col-xs-6" style="margin-top: -15px; width: 86%;">
+      <h6 style=" margin-top: 0px;margin-bottom: 0px !important;">Name:<span> {{driver_name}}</span></h6>
+      <h6>Moblie No:<span>{{driver_moblie_no}}</span></h6>
+    </div>
+  </div>
+  <hr>
+  <div class="row mt15" style="    margin-left: 20px;">
+    
+   <ionic-rating-component #rating
+        activeIcon = "star"
+        defaultIcon = "star-outline"
+        activeColor = "#FFD700" 
+        defaultColor = "#f4f4f4"
+        readonly="false"
+        rating="4"
+        fontSize = "32px"
+        (ratingChanged)="logRatingChange($event)">
+    </ionic-rating-component>
+ 
+  </div>
+  
+  <div style="margin-left: 15px;margin-right: 15px;">
+    <ion-textarea style="    border: 1px solid #eee;" rows="6" cols="20" placeholder="Enter Comment"
+      [(ngModel)]="comment_value" ngModel></ion-textarea>
+
+  </div>
+  <div padding >
+    <div class="col-xs-6">
+      <ion-button align="right" size="small" type="submit" (click)="closeModal('close')"  expand="block">Cancel</ion-button>
+    </div>
+    <div class="col-xs-6">
+      <ion-button align="right" size="small" type="submit" (click)="savetolinktoreview()" expand="block">Submit</ion-button>
+    </div>
+  
+   
+  </div>

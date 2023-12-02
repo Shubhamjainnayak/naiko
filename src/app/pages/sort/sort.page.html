@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Filter</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="filterItems">
+    <ion-item lines="none">
+      <ion-icon name="location" slot="icon-only" slot="start"></ion-icon>
+      <ion-label> {{util.getString('City')}} </ion-label>
+      <ion-select
+        [(ngModel)]="city"
+        okText="Okay"
+        cancelText="Dismiss"
+       
+      >
+        <ion-select-option *ngFor="let code of city_list" value="{{code.city}}">
+          {{code.city}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <h3 style="margin-left: 20px;" >OR</h3>
+    <ion-item lines="none">
+      <ion-label> {{util.getString('Vendor Name')}} </ion-label>
+      <ion-input placeholder="Enter Vendor Name" [(ngModel)]="vendor_name"></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-icon name="man" slot="icon-only" slot="start"></ion-icon>
+      <ion-label> {{util.getString('Gender')}} </ion-label>
+      <ion-select
+        okText="Okay"
+        cancelText="Dismiss"
+       
+        [(ngModel)]="gender"
+      >
+        <ion-select-option value="male">
+          {{util.getString('Male')}}
+        </ion-select-option>
+        <ion-select-option value="female">
+          {{util.getString('Female')}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none">
+      <div class="div_chk">
+        <ion-checkbox
+          [checked]="check"
+          [(ngModel)]="check"
+          color="light"
+          class="chk"
+        ></ion-checkbox>
+        <ion-label class="lbl_police"
+          ><span class="span_term"> {{util.getString('VIP Member')}}</span>
+        </ion-label>
+      </div>
+    </ion-item>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()"> Clear Filters </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="apply()"> Apply </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

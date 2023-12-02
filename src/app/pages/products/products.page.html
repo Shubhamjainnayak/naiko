@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Search</ion-title>
+    
+  </ion-toolbar>
+ 
+  <div class="topHeader"  >
+    <p class="itemsFound">
+      {{products.length}} {{util.getString('Items')}}
+    </p>
+    <div>
+      <ion-button (click)="priceFilter()" color="light" size="small">
+        <ion-icon slot="start" name="options"></ion-icon>
+        {{util.getString('Filter')}} 
+      </ion-button>
+    
+    </div>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="main_content">
+    <p class="ion-text-center" *ngIf="!dummy?.length && !products?.length"> {{util.getString('No Products found')}} </p>
+
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of dummy">
+        <ion-skeleton-text animated style="width: 100%;height: 100px;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 70%;height: 10px;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 50%;height: 10px;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 80%;height: 10px;"></ion-skeleton-text>
+      </ion-col>
+    </ion-row>
+
+
+    <div class="listView">
+      <ion-row>
+        <ion-col size="6" *ngFor="let item of products;let i = index;">
+          <div class="box">
+            <div
+              class="image_div"
+              (click)="goToSingleProduct(item.u_id,item.business_name)"
+              [ngStyle]="{'background-image':'url('+image_link2+item.profile_image+'),url(assets/imgs/user.png)'}"
+            ></div>
+            <div class="details">
+              <ion-label class="pro_name" (click)="goToSingleProduct(item.u_id,item.business_name)">
+                {{ item.business_name }}</ion-label
+              >
+              <div class="ratingItems ion-activatable" style="font-size: 12px;" >
+                <ion-icon [name]="item.user_rating >= 1 ? 'star':'star'" [color]="item.user_rating >= 1 ? 'warning':'medium'">
+                </ion-icon>
+                <ion-icon [name]="item.user_rating >= 2 ? 'star':'star'" [color]="item.user_rating >= 2 ? 'warning':'medium'">
+                </ion-icon>
+                <ion-icon [name]="item.user_rating >= 3 ? 'star':'star'" [color]="item.user_rating >= 3 ? 'warning':'medium'">
+                </ion-icon>
+                <ion-icon [name]="item.user_rating >= 4 ? 'star':'star'" [color]="item.user_rating >= 4 ? 'warning':'medium'">
+                </ion-icon>
+                <ion-icon [name]="item.user_rating >= 5 ? 'star':'star'" [color]="item.user_rating >= 5 ? 'warning':'medium'">
+                </ion-icon>
+               
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+              <ion-label class="pro_name" (click)="goToSingleProduct(item.u_id,item.business_name)">
+              
+                {{ (item.short_note.length>20)? (item.short_note | slice:0:20)+'..':(item.short_note) }}....
+                </ion-label
+              >
+
+              <div class="small_flex">
+                <div
+                  class="btnBtm"
+                  (click)="goToSingleProduct(item.u_id,item.business_name)"
+                >
+                  <div
+                    class="ion-activatable ripple-parent"
+                  
+                  >
+                    {{util.getString('Book Now')}}
+                    <ion-ripple-effect></ion-ripple-effect>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> </ion-col
+      ></ion-row>
+    </div>
+    
+    
+  </div>
+
+</ion-content>

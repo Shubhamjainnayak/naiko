@@ -1,0 +1,7 @@
+{
+  "name": "naico",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

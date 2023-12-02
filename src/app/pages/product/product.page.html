@@ -1,0 +1,191 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> {{name}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <div *ngIf="!loaded" style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+    <ion-spinner color="primary" name="crescent"></ion-spinner>
+  </div>
+  <div class="slider_div" *ngIf="loaded && name">
+    <ion-slides [options]="slideOpts" pager>
+      <ion-slide *ngFor="let item of gallery">
+        <div class="back_image" (click)="openViewer(item,1)"
+          [ngStyle]="{'background-image':'url('+item+'),url(assets/imgs/user.png)'}">
+          <div class="percent" > {{prefix}} </div>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="main_content_div"  *ngFor="let item of product_details;">
+
+
+    <div class="detail_div">
+      <ion-label class="pro_name">{{name}}</ion-label>
+      <ion-label (click)="productRating()" class="pro_name" style="float: right;font-size: 15px;color: red;font-weight: 600;">view rating</ion-label>
+      
+
+      <div class="ratingItems ion-activatable" >
+        <ion-icon [name]="item.user_rating >= 1 ? 'star':'star'" [color]="item.user_rating >= 1 ? 'warning':'medium'">
+        </ion-icon>
+        <ion-icon [name]="item.user_rating >= 2 ? 'star':'star'" [color]="item.user_rating >= 2 ? 'warning':'medium'">
+        </ion-icon>
+        <ion-icon [name]="item.user_rating >= 3 ? 'star':'star'" [color]="item.user_rating >= 3 ? 'warning':'medium'">
+        </ion-icon>
+        <ion-icon [name]="item.user_rating >= 4 ? 'star':'star'" [color]="item.user_rating >= 4 ? 'warning':'medium'">
+        </ion-icon>
+        <ion-icon [name]="item.user_rating >= 5 ? 'star':'star'" [color]="item.user_rating >= 5 ? 'warning':'medium'">
+        </ion-icon>
+        ({{item.user_rating}} {{util.getString('Rating')}})
+        <ion-ripple-effect></ion-ripple-effect>
+      </div>
+      <div class="storeName ion-activatable" >
+        {{item.business_name}}
+      </div>
+      
+      
+
+      <div class="pro_desc_div" *ngIf="item.short_note">
+        <ion-label class="head_lbl"> {{util.getString('Description')}} </ion-label>
+        <ion-label class="light_lbl"> {{item.short_note}} </ion-label>
+      </div>
+
+      <div class="pro_desc_div" *ngIf="item.about_me">
+        <ion-label class="head_lbl"> {{util.getString('About Me')}} </ion-label>
+        <ion-label class="light_lbl">{{item.about_me}} </ion-label>
+      </div>
+
+    
+
+      <div class="pro_desc_div" *ngIf="item.address">
+        <ion-label class="head_lbl"> {{util.getString('Address')}} </ion-label>
+        <ion-label class="light_lbl"> {{item.address}} </ion-label>
+      </div>
+      <div class="pro_desc_div" *ngIf="item.show_offers_add">
+        <ion-label class="head_lbl"> {{util.getString('Offer')}} </ion-label>
+        <ion-label class="light_lbl">{{item.show_offers_add}} </ion-label>
+      </div>
+      <div class="pro_desc_div" *ngIf="service">
+        <ion-label class="head_lbl"> {{util.getString('Our Service')}} </ion-label>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" *ngFor="let code of service" >
+              <ion-chip style="width: 100%;  place-content: center; height: 100%; ">
+               
+                <ion-label>{{code.service_name}} : Rs.{{code.price}}</ion-label>
+              </ion-chip>
+             
+              </ion-col>
+              </ion-row>
+              </ion-grid>
+           
+      </div>
+      <div class="pro_desc_div" *ngIf="staff">
+        <ion-label class="head_lbl"> {{util.getString('Our Staff')}} </ion-label>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" *ngFor="let code of staff" >
+              <ion-chip style="width: 100%;  place-content: center; height: 100%; "  (click)="openViewer(code.image,2)">
+                <ion-avatar>
+                  <img src="https://www.naiko.in/assets/images/staff/{{code.image}}">
+                </ion-avatar>
+                <ion-label>{{code.full_name}}</ion-label>
+              </ion-chip>
+              </ion-col>
+              </ion-row>
+              </ion-grid>
+           
+      </div>
+
+
+      <div class="pro_desc_div" style="    text-align: center;">
+        <ion-label class="head_lbl" style="color: black;font-size: 25px;"> {{util.getString('Get Appointment')}} </ion-label>
+      
+      </div>
+      <div class="name">
+        <div class="content_div" >
+          <ion-item lines="none">
+            <ion-label> {{util.getString('Gender')}} </ion-label>
+            <ion-select okText="Okay" cancelText="Dismiss" [(ngModel)]="gender">
+              <ion-select-option value="male"> {{util.getString('Male')}} </ion-select-option>
+              <ion-select-option value="female"> {{util.getString('Female')}} </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+      </div> 
+   <div class="name">
+        <div class="content_div" >
+          <ion-item lines="none">
+            <ion-label> {{util.getString('Staff')}} </ion-label>
+            <ion-select [(ngModel)]="staff_select"   okText="Okay" cancelText="Dismiss" 
+            >
+           <ion-select-option *ngFor="let code of staff" value="{{code.st_id}}~@~{{code.full_name}}"> {{code.full_name}} 
+           </ion-select-option>
+         
+     </ion-select>
+          </ion-item>
+        </div>
+      </div> 
+    <div class="name">
+        <div class="content_div" >
+          <ion-item lines="none">
+            <ion-label> {{util.getString('Service')}} </ion-label>
+            <ion-select multiple  [(ngModel)]="service_select"   okText="Okay" cancelText="Dismiss" interface="action-sheet" 
+            >
+           <ion-select-option *ngFor="let code of service" value="{{code.s_id}}~@~{{code.service_name}}"> {{code.service_name}} : Rs.{{code.price}} 
+           </ion-select-option>
+         
+     </ion-select>
+          </ion-item>
+        </div>
+      </div> 
+     <div class="name">
+        <div class="content_div" >
+          <ion-label> {{util.getString('Address')}} </ion-label>
+          <ion-textarea row="10" style="border: 1px solid black;" type="text" [placeholder]="util.getString('Full Address')" [(ngModel)]="address" >
+          </ion-textarea>
+        </div>
+      </div> 
+     <div class="name">
+        <div class="content_div" >
+          <ion-label> {{util.getString('Select Time(From Today Date)')}} </ion-label>
+            <ion-datetime displayFormat="hh-mm-A" placeholder="Select Time" name="timining"  [(ngModel)]="timining"></ion-datetime>
+         
+        </div>
+      </div> 
+      <div class="name" style="    margin-top: -40px;">
+        <div class="content_div" >
+          <ion-item lines="none" style="margin-left: -15px;">
+            <div class="div_chk">
+              <ion-checkbox [checked]="check" [(ngModel)]="check" color="light" class="chk"></ion-checkbox>
+              <ion-label class="lbl_police"><span class="span_term">
+                  {{util.getString('Home Services')}}</span>
+              </ion-label>
+            </div>
+          </ion-item>
+        </div>
+      </div>
+    
+      <div class="small_flex">
+        <div
+          class="btnBtm"
+         (click)="submit_booking_user()" 
+        >
+          <div
+            class="ion-activatable ripple-parent"
+          
+          >
+            {{util.getString('Book Now')}}
+            <ion-ripple-effect></ion-ripple-effect>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

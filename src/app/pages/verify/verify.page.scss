@@ -1,0 +1,29 @@
+.otpContainer{
+    margin-top: 50%;
+    .headerText{
+        text-align: center;
+        font-weight: bolder;
+        font-size: 2rem;
+    }    
+    .subTitleText{
+        text-align: center;
+        font-weight: bold;
+        color: gray;
+        font-size: 1rem;
+    }
+    .otpInputs{
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+    }
+    .btn_class{
+        color: white;
+        margin: 30px 50px;
+    }
+    .otp_layout{
+        margin-left: 53px;
+        margin-right: 50px;
+        border: 1px solid black;
+        text-align: center;
+    }
+}

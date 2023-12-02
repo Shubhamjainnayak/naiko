@@ -1,0 +1,115 @@
+<ion-header class="ion-no-border" >
+  <ion-toolbar color="primary">
+    <ion-title> {{util.getString('Your History')}} </ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content >
+  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!dummy?.length && !orders?.length" class="nothing">
+    <p class="bolder"> {{util.getString('No History found!')}} </p>
+   
+  </div>
+  <ion-item *ngFor="let item of dummy">
+    <ion-thumbnail slot="start">
+      <ion-skeleton-text animated style="width: 100%;height: 100px;"></ion-skeleton-text>
+    </ion-thumbnail>
+    <ion-label>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-label>
+
+  </ion-item>
+  <div class="main_content_div" *ngIf="orders?.length">
+
+    <ion-label class="top_lbl"> {{util.getString('History')}} </ion-label>
+
+    <div class="content_div">
+
+      <div class="card_div" *ngFor="let item of orders" >
+
+        <div class="image_div">
+          <img [src]="image_link+ item.profile_image" onError="this.src='assets/imgs/user.png'">
+          <div class="small_flex" *ngIf="item.user_status ==='1'">
+            <div
+              class="btnBtm"
+             (click)="call_now(item.vender_mo)" 
+            >
+              <div
+                class="ion-activatable ripple-parent"
+              
+              >
+                {{util.getString('Call Now')}}
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="desc_div">
+          <ion-label style="font-weight: bold;color: gray;font-size: 12px;"> {{item.inv_prefix}}{{item.inv_no}}
+         <span class="business_name">{{ item.entry_date}}</span> </ion-label>
+          <ion-label style="font-weight: bold;color: gray;font-size: 12px;"> {{item.business_name}}
+          </ion-label>
+          <ion-label style="font-weight: bold;color: gray;font-size: 12px;">Addres:- {{item.address}}
+          </ion-label>
+        
+          <div  class="border_bottom" style="margin-top: 15px;">
+ <p class="itemss" *ngIf="item.user_status ==='1'">
+              <span>Booking Time</span>
+              <span >{{item.booking_time}}</span>
+           </p>  
+           <p class="itemss" >
+            <span>Gender</span>
+            <span >{{item.gender}}</span>
+         </p>  <p class="itemss" >
+            <span>Staff Name</span>
+            <span >{{item.full_name}}</span>
+         </p> <p class="itemss" >
+            <span>Home Services</span>
+            <span *ngIf="item.vip ==='1'">Yes</span>
+            <span *ngIf="item.vip ==='0'">No</span>
+         </p>       
+		 <p class="itemss" *ngIf="item.user_status ==='1'">
+              <span>Otp</span>
+              <span >{{item.user_otp}}</span>
+           </p>
+           <p class="itemss" *ngIf="item.user_status ==='0'">
+              <span>Status</span>
+              <span  style="color: black;">Pending</span>
+           </p>
+            <p class="itemss" *ngIf="item.user_status ==='1'">
+              <span>Status</span>
+              <span  style="color: green;" >Confirm</span>
+           </p>
+            <p class="itemss" *ngIf="item.user_status ==='3'">
+              <span>Status</span>
+              <span  style="color: red;" >Cancel</span>
+           </p><p class="itemss" *ngIf="item.user_status ==='2'">
+              <span>Status</span>
+              <span  style="color: green;" >Complete</span>
+           </p>
+           <p class="itemss" >
+            <span>Address</span>
+            <span   >{{item.user_address}}</span>
+         </p>
+           <p class="itemss" >
+            <span>Service   </span>
+            <span> {{item.service_name}}</span>
+         </p>
+          <p  *ngIf="item.user_status ==='2' && item.rating==null"  class="itemss" style="float: right;"  (click)="ratingpage(item.oh_id,item.business_name,item.vender_mo,item.address,item.user_status,item.booking_time)" >
+          <span  style="color: red;"  >Rate Us</span>
+       </p>  
+          </div>
+          
+        </div>
+       
+      </div>
+
+    </div>
+  </div>
+</ion-content>

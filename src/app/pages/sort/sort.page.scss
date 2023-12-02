@@ -1,0 +1,32 @@
+.div_chk{
+    width: 100%;
+    margin: 20px 0px;
+    position: relative;
+
+    .lbl_police{
+        font-size: 10px;
+        // color: black;
+        margin-left: 40px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .span_term{
+        font-size: 16px;
+    }
+
+    .chk{
+        --size : 20px;
+        // --background : transparent !important;
+        --border-radius : 5px !important;
+        --border-color-checked : var(--ion-color-primary);
+    }
+    .lbl_by{
+        display: block;
+        font-size: 10px;
+        color: black;
+        margin-top: 10px;
+    }
+   
+}

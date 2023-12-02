@@ -1,0 +1,247 @@
+<ion-header class="ion-no-border">
+ <ion-toolbar color="primary" (click)="changeCity()">
+    <ion-title color="light"  class="ion-text-left">
+      <div class="ion-activatable" >
+      
+      Home
+        <ion-ripple-effect type="bounded"></ion-ripple-effect>
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button >
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main_content_div">
+    
+    <div class="tab"  *ngIf="!dummyBanners?.length && banners?.length" >
+      <button style="width: 25%; font-size:13px;" class="tablinks "  (click)="updateFilter('3')"   >Home </button>
+      <button  style="width: 25%; font-size: 13px;" class="tablinks"  (click)="updateFilter('1')" >Male</button>
+      <button style="width: 25%; font-size: 13px;" class="tablinks"   (click)="updateFilter('2')" >Female</button>
+      <button style="width: 25%; font-size: 13px;" class="tablinks"   (click)="updateFilter('4')" >Unisex</button>
+    </div>
+    <div class="flx">
+      <ion-searchbar [placeholder]="util.getString('Search  Vendor')" [(ngModel)]="terms" inputmode="text" type="search"
+        #q [debounce]="250" mode="ios"
+        showCancelButton="never">
+      </ion-searchbar>
+      <ion-button (click)="search(terms)" expand="block" fill="clear" size="small">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+  
+    </div>
+    <div style="    margin-top: 20px;" class="cateLbl" *ngIf="!dummyBanners?.length && banners?.length">
+      <ion-label class="all">
+        {{util.getString('Exclusive Offers')}}
+      </ion-label>
+    </div>
+
+    <!-- Top Banners -->
+    <div class="slider_div" *ngIf="!dummyBanners?.length && banners?.length">
+      <ion-slides [options]="slideOpts">
+        <ion-slide *ngFor="let item of dummyBanners">
+          <!-- <div class="card"> -->
+          <ion-skeleton-text
+            animated
+            style="width: 100%; height: 120px"
+          ></ion-skeleton-text>
+          <!-- </div> -->
+        </ion-slide>
+        <ion-slide *ngFor="let item of banners">
+          <div class="card">
+            <div
+              class="back_image"
+              [ngStyle]="{'background-image':'url('+image_link+item.image+'),url(assets/imgs/bg.jpg)'}"
+            
+            ></div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <div style="    margin-top: 20px;" class="cateLbl" *ngIf="!dummyBanners?.length && banners?.length">
+      <ion-label class="all">
+        {{util.getString('Popular Vendor')}}
+      </ion-label>
+    </div>
+
+
+
+    <div class="topProducts" *ngIf="popular_venders && popular_venders?.length">
+      <ion-slides [options]="slideOpts2" style="margin-bottom: -15px;">
+
+        <ion-slide *ngFor="let item of popular_venders;let i = index;">
+          <div class="content_div">
+            <div class="card_div">
+              <div class="image_div"   (click)="goToSingleProduct(item.u_id,item.business_name)"
+              [ngStyle]="{'background-image':'url('+image_link2+item.profile_image+'),url(assets/imgs/user.png)'}">
+               
+              </div>
+              <div class="desc_div"   (click)="goToSingleProduct(item.u_id,item.business_name)">
+                <ion-label class="pro_name">
+                  {{ ((item.business_name?item.business_name.length:0)>12)? (item.business_name | slice:0:12)+'..':(item.business_name) }}</ion-label>
+                <ion-label class="pro_detail" *ngIf="item.address">
+                  {{ (item.address.length>20)? (item.address | slice:0:20)+'..':(item.address) }}
+                </ion-label>
+                <ion-label class="price_lbl">
+                  <ion-icon [name]="item.user_rating >= 1 ? 'star':'star'" [color]="item.user_rating >= 1 ? 'warning':'medium'">
+                  </ion-icon>
+                  <ion-icon [name]="item.user_rating >= 2 ? 'star':'star'" [color]="item.user_rating >= 2 ? 'warning':'medium'">
+                  </ion-icon>
+                  <ion-icon [name]="item.user_rating >= 3 ? 'star':'star'" [color]="item.user_rating >= 3 ? 'warning':'medium'">
+                  </ion-icon>
+                  <ion-icon [name]="item.user_rating >= 4 ? 'star':'star'" [color]="item.user_rating >= 4 ? 'warning':'medium'">
+                  </ion-icon>
+                  <ion-icon [name]="item.user_rating >= 5 ? 'star':'star'" [color]="item.user_rating >= 5 ? 'warning':'medium'">
+                  </ion-icon>
+
+                </ion-label>
+
+                <div class="small_flex">
+                  <div class="btnBtm"   (click)="goToSingleProduct(item.u_id,item.business_name)">
+                    <div class="ion-activatable ripple-parent">
+                      {{util.getString('Book Now')}}
+                      <ion-ripple-effect></ion-ripple-effect>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    
+    <div style="    margin-top: 20px;" class="cateLbl" *ngIf="popular_near && popular_near?.length">
+      <ion-label class="all">
+        {{util.getString('Near By Vendor')}}
+      </ion-label>
+    </div>
+
+
+
+    <div class="topProducts" *ngIf="popular_near && popular_near?.length">
+      <ion-slides [options]="slideOpts2" style="margin-bottom: -15px;">
+
+        <ion-slide *ngFor="let item of popular_near;let i = index;">
+          <div class="content_div">
+            <div class="card_div">
+              <div class="image_div"   (click)="goToSingleProduct(item.u_id,item.business_name)"
+              [ngStyle]="{'background-image':'url('+image_link2+item.profile_image+'),url(assets/imgs/user.png)'}">
+               
+              </div>
+              <div class="desc_div"   (click)="goToSingleProduct(item.u_id,item.business_name)">
+                <ion-label class="pro_name">
+                  {{ (item.business_name.length>12)? (item.business_name | slice:0:12)+'..':(item.business_name) }}</ion-label>
+                <ion-label class="pro_detail" *ngIf="item.address">
+                  {{ (item.address.length>20)? (item.address | slice:0:20)+'..':(item.address) }}
+                </ion-label>
+                <ion-label class="price_lbl">
+                  <ion-icon [name]="item.user_rating >= 1 ? 'star':'star'" [color]="item.user_rating >= 1 ? 'warning':'medium'">
+                  </ion-icon>
+                  <ion-icon [name]="item.user_rating >= 2 ? 'star':'star'" [color]="item.user_rating >= 2 ? 'warning':'medium'">
+                  </ion-icon>
+                  <ion-icon [name]="item.user_rating >= 3 ? 'star':'star'" [color]="item.user_rating >= 3 ? 'warning':'medium'">
+                  </ion-icon>
+                  <ion-icon [name]="item.user_rating >= 4 ? 'star':'star'" [color]="item.user_rating >= 4 ? 'warning':'medium'">
+                  </ion-icon>
+                  <ion-icon [name]="item.user_rating >= 5 ? 'star':'star'" [color]="item.user_rating >= 5 ? 'warning':'medium'">
+                  </ion-icon>
+
+                </ion-label>
+
+                <div class="small_flex">
+                  <div class="btnBtm"   (click)="goToSingleProduct(item.u_id,item.business_name)">
+                    <div class="ion-activatable ripple-parent">
+                      {{util.getString('Book Now')}}
+                      <ion-ripple-effect></ion-ripple-effect>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+
+
+    <div class="cateLbl" *ngIf="!dummyBanners?.length && banners?.length">
+      <ion-label class="all">
+        {{util.getString('All Vendor')}}
+      </ion-label>
+    </div>
+
+
+    <div class="listView">
+      <ion-row>
+        <ion-col size="6" *ngFor="let item of topProducts;let i = index;">
+          <div class="box">
+            <div
+              class="image_div"
+              (click)="goToSingleProduct(item.u_id,item.business_name)"
+              [ngStyle]="{'background-image':'url('+image_link2+item.profile_image+'),url(assets/imgs/user.png)'}"
+            ></div>
+            <div class="details">
+             
+              <ion-label class="pro_name" (click)="goToSingleProduct(item.u_id,item.business_name)">
+                {{ item.business_name }}</ion-label
+              >
+              <div class="ratingItems ion-activatable" style="font-size: 12px;" >
+                <ion-icon [name]="item.user_rating >= 1 ? 'star':'star'" [color]="item.user_rating >= 1 ? 'warning':'medium'">
+                </ion-icon>
+                <ion-icon [name]="item.user_rating >= 2 ? 'star':'star'" [color]="item.user_rating >= 2 ? 'warning':'medium'">
+                </ion-icon>
+                <ion-icon [name]="item.user_rating >= 3 ? 'star':'star'" [color]="item.user_rating >= 3 ? 'warning':'medium'">
+                </ion-icon>
+                <ion-icon [name]="item.user_rating >= 4 ? 'star':'star'" [color]="item.user_rating >= 4 ? 'warning':'medium'">
+                </ion-icon>
+                <ion-icon [name]="item.user_rating >= 5 ? 'star':'star'" [color]="item.user_rating >= 5 ? 'warning':'medium'">
+                </ion-icon>
+               
+                <ion-ripple-effect></ion-ripple-effect>
+              </div>
+              <ion-label class="pro_name" (click)="goToSingleProduct(item.u_id,item.business_name)">
+              
+                {{ (item.short_note.length>20)? (item.short_note | slice:0:20)+'..':(item.short_note) }}....
+                </ion-label
+              >
+             
+              <div class="small_flex">
+                <div
+                  class="btnBtm"
+                  (click)="goToSingleProduct(item.u_id,item.business_name)"
+                >
+                  <div
+                    class="ion-activatable ripple-parent"
+                  
+                  >
+                    {{util.getString('Book Now')}}
+                    <ion-ripple-effect></ion-ripple-effect>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> </ion-col
+      ></ion-row>
+    </div>
+    <div *ngIf="dummyBanners?.length && !banners?.length">
+
+      <ion-item    *ngFor="let item of dummyBanners">
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text animated style="width: 100%;height: 100px;"></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </ion-label>
+    
+      </ion-item>
+    </div>
+  </div>
+</ion-content>
