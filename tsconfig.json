@@ -19,5 +19,9 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
-  }
+  },
+  "include": [
+    "src/*.ts", /* Add necessary patterns to include your entry point files */
+    /* Other include patterns */
+  ]
 }

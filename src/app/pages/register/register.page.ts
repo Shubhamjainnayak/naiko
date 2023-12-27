@@ -88,18 +88,19 @@ if(this.email){
     this.loggedIn = true;
     this.api.post('Android/registerUser', param).subscribe((data: any) => {
       this.loggedIn = false;
-    console.log(data);
+    
+      console.log(data);
       if (data && data.status === 200) {
         this.util.userInfo = data.data;
         localStorage.setItem('uMobile', '+' + this.ccCode + this.mobile);
-          this.openModal(data.data.last_id);
+        this.openModal(data.data.last_id);
       } else if (data && data.status === 500) {
         this.util.errorToast(data.data.message);
-      } else {
+      } else {  
         this.util.errorToast(this.util.getString('Something went wrong'));
       }
     }, error => {
-      console.log(error);
+      console.log(error,'error');
       this.loggedIn = false;
       this.util.errorToast(this.util.getString('Something went wrong'));
     });

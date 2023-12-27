@@ -3,8 +3,9 @@ import { UtilService } from '../../services/util.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { AlertController, PopoverController } from '@ionic/angular';
+import { AlertController, PopoverController, Platform } from '@ionic/angular';
 import { FiltersComponent } from 'src/app/components/filters/filters.component';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -44,6 +45,7 @@ export class HomePage implements OnInit {
     private iab: InAppBrowser,
     private alertCtrl: AlertController,
     private popoverController: PopoverController,
+    private platform: Platform
   ) {
     this.dummyBanners = Array(5);
     this.banners = [];
@@ -153,7 +155,13 @@ export class HomePage implements OnInit {
         name: name
       }
     };
-    this.router.navigate(['product'], param);
+    try {
+      this.platform.ready().then(() => {
+        this.router.navigate(['product'], param); 
+      });
+    } catch (error) {
+      alert(JSON.stringify(error));
+    }
   }
   changeCity() {
     this.router.navigate(['products']);
@@ -161,12 +169,8 @@ export class HomePage implements OnInit {
 
 
   search(event: string) {
-    console.log(event);
-    if (event && event !== '') {
-
-
+    if (event && event !== '') { 
       event = event.toLocaleLowerCase();
-
       return this.topProducts = this.topProducts_main.filter(it => {
     
         if (it.business_name.toLocaleLowerCase().includes(event)) {
