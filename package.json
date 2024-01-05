@@ -57,7 +57,7 @@
     "@types/node": "^12.11.1",
     "call-number": "^1.0.1",
     "codelyzer": "^6.0.0",
-    "cordova-android": "^10.0.0",
+    "cordova-android": "12.0",
     "cordova-plugin-add-swift-support": "^2.0.2",
     "cordova-plugin-advanced-http": "^3.1.0",
     "cordova-plugin-android-permissions": "^1.1.2",
@@ -124,8 +124,6 @@
       "cordova-plugin-nativeaudio": {},
       "call-number": {}
     },
-    "platforms": [
-      "android"
-    ]
+    "platforms": []
   }
 }
