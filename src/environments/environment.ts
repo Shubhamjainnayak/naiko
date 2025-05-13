@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseURL: 'https://naiko.rsparvat.in/',
+  baseURL: 'https://www.naiko.in/',
  onesignal: {
      appId: '69709cff-ea01-49e7-b7ed-97213557bc8c',
      googleProjectNumber: '522729871861',

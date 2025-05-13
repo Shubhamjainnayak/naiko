@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { JobsPageRoutingModule } from './Job-routing.module';
+// import { JobsPageRoutingModule } from './Job-routing.module';
 
 import {JobsPage } from './job.page';
 import { ComponentsModule } from 'src/app/components/components.module';
@@ -14,7 +14,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    JobsPageRoutingModule,
+    // JobsPageRoutingModule,
     ComponentsModule
   ],
   declarations: [JobsPage]

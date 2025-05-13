@@ -45,7 +45,8 @@ export class ProfilePage implements OnInit {
       this.util.hide();
 
       if (data && data.status === 200 && data.data) {
-
+        console.log(data.data,'fsdfd');
+        
         this.util.userInfo = data.data.profile;
         this.fname = data.data.profile.full_name;
         this.mobile = data.data.profile.mobile_no;
